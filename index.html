@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Business Media Lab Project Vacancy Board 2025-2026 | BUas</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #FF6600 0%, #0066CC 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        
+        .difficulty-easy {
+            background-color: #CCE5FF;
+            color: #0052A3;
+        }
+        
+        .difficulty-intermediate {
+            background-color: #FFE5CC;
+            color: #CC5200;
+        }
+        
+        .difficulty-advanced {
+            background-color: #FFB366;
+            color: #8B3A00;
+        }
+        
+        .category-badge {
+            background-color: #FFE5CC;
+            color: #CC5200;
+        }
+        
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+
+        const projectData = [
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Improve and promote the variety of offered experiences of Holy Moly",
+        "Year": 2,
+        "Block": "A/B/C/D Portfolio & Creative Collective",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Holy Moly experience",
+        "Client": "Holy Moly",
+        "Website": "https://holymolybreda.nl/"
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "Bring the story of war hero Guy Gibson in the Steenbergen area to life by means of storytelling, theming/and (interactive) experience concepting",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective/Graduation",
+        "Difficulty level": "advanced",
+        "Start": "01-09-2025",
+        "Finish": "t.b.d.",
+        "Project title": "Our Common Story Steenbergen",
+        "Client": "Robert Catsburg",
+        "Website": "n.a."
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective/Graduation",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Pijnstad follow up",
+        "Client": "Pijnstad ",
+        "Website": "https://www.pijnstad.nl/"
+    },
+    {
+        "Categorie": "Listening",
+        "Short description": "design and produce a podcast series in collaboration with industry partners, exploring current and future developments in the event industry",
+        "Year": "3 and 4",
+        "Block": "A/B/C/D",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "25-06-2026",
+        "Project title": "Event Talks",
+        "Client": "ALE /  EFB",
+        "Website": "n.a."
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Go to market growth lab: experiment with recruitment of 'Dolly's' en customers; activation, partnerships, online campagnes, interviews etc",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective/Graduation",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Dolly marketing",
+        "Client": "Dolly",
+        "Website": "https://aboutdolly.com/"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Content & community studio: Create social content (TikTok/Instagram), ambasadors programm, PR-pitch",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective/Graduation",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Dolly content creation",
+        "Client": "Dolly",
+        "Website": "https://aboutdolly.com/"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Create an effective international marketing and communication strategy to increase HenArt® brand visibility, including social media approach and influencer marketing  ",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "06-10-2025",
+        "Finish": "16-01-2026",
+        "Project title": "Henart branding and promotion",
+        "Client": "Henart  Pet products",
+        "Website": "https://www.henart.com/en"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a short film for Prostitution Social Work West Brabant to give organizations a better understanding of the diversity among sex workers, the types of questions or challenges they may have, and how PMW can support them",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "14-12-2025",
+        "Project title": "Awareness prostitution video",
+        "Client": "Prostitutie Maatschappelijk Werk",
+        "Website": "https://www.imwbreda.nl/pmw"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Create an online campaign & short  video content for social media (Instagram & Tiktok) to attract new sustainable users of the platform",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "16-01-26",
+        "Project title": "ENTER Breda promotion",
+        "Client": "Enter Breda",
+        "Website": "https://www.enterbreda.nl/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a promo video for climbing the tower and create an experience video for people that cannot climb it",
+        "Year": 2,
+        "Block": "C/D Portfolio",
+        "Difficulty level": "easy ",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Church climbing video",
+        "Client": "Beleef Sprundel",
+        "Website": "Kerktoren Sprundel - Beleef Sprundel"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a creative music video telling the story of the lyrics",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "advanced",
+        "Start": "01-09-2025",
+        "Finish": "22-12-2025",
+        "Project title": "Tak & Band Music Video",
+        "Client": "Tak & Band",
+        "Website": "https://takandband.nl/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a short documentary on the ''Neighbourhoodlab\" in IJpelaar and show what they do there and what the impact is",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "24-12-2025",
+        "Project title": "ULLB Short docu Wijklabs",
+        "Client": "Urban Living Lab Breda",
+        "Website": "https://urbanlivinglabbreda.nl/"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Create inspiring content and Youtube video's that informs about the use and unique features of Boretti barbecues. ",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "easy ",
+        "Start": "01-09-2025",
+        "Finish": "19-12-2025",
+        "Project title": "Boretti video content",
+        "Client": "Boretti",
+        "Website": "https://boretti.com/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create short engaging video content for social media to promote their mission on sustainable reusable christmas trees",
+        "Year": "2 or 3",
+        "Block": "A/B",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "16-01-2026",
+        "Project title": "Beterboompje Christmas Campain",
+        "Client": "Beter Boompje",
+        "Website": "https://www.beterboompje.nl/"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Visualize the transition from 'selling sustainable christmas trees' to a social enterprise by making a short series of video's and/or develop a creative marketing campaign",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective/Graduation",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Beterboompje Transition Campaign",
+        "Client": "Beter Boompje",
+        "Website": "https://www.beterboompje.nl/"
+    },
+    {
+        "Categorie": "Design Experiences",
+        "Short description": "Design a public exposition on the square highlighting and showcasing the key players of the square and organise the opening of the expo",
+        "Year": "2, 3 and 4",
+        "Block": "A/B Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "01-11-2025",
+        "Project title": "ULLB Edison Plein Expo / short docu",
+        "Client": "Urban Living Lab Breda",
+        "Website": "https://winkelcentrumedisonplein.nl/"
+    },
+    {
+        "Categorie": "Design Experiences",
+        "Short description": "Organise a variety of seasonal events for the AGM community ",
+        "Year": 3,
+        "Block": "A/B",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "End block B",
+        "Project title": "AGM Seasonal events",
+        "Client": "AGM International Office",
+        "Website": "n.a."
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "Design a website for a Virtual Production gathering that invites (international) VP creatives to meet in Breda ",
+        "Year": "2 or 3",
+        "Block": "A/B Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "25-12-2025",
+        "Project title": "Virtual Production (VP) gathering website",
+        "Client": "Cradle/Avenue Virtual Production",
+        "Website": "Home - AVENUE"
+    },
+    {
+        "Categorie": "Listening/Wathing",
+        "Short description": "Create an awareness campaign (video) for Impact Up that communicates the added value that Impact Up can bring to stakeholders",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "31-12-2025",
+        "Project title": "Impact Up awareness campaign",
+        "Client": "Impact Up / LCB",
+        "Website": "https://impactup-brabant.nl/"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Promote a book as a sustainable management aid for organisations by developing promotional concepts, setting up a campaign, creating content and a promotional video",
+        "Year": 2,
+        "Block": "A/B",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Linda Effinger book promotion",
+        "Client": "Linda Effinger",
+        "Website": "https://www.linda-effinger.com/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a promotional video as well as social media content for Barry & Krista's Facility Management Service Company",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "a.s.a.p",
+        "Finish": "t.b.d.",
+        "Project title": "Barrista Facilitair Promo video",
+        "Client": "Barrista Facilitair",
+        "Website": "https://barristafacilitairbedrijf.nl/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "t.b.d.",
+        "Project title": "Radboudumc GP video",
+        "Client": "Radboud UMC",
+        "Website": "www.radboudumc.nl"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create Social Media video content for Slot Loevestein to promote various things ranging from a Trouwen op de Motte tot educatieve Escape games",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Slot Loevestein Social Media video content ",
+        "Client": "Slot Loevestein",
+        "Website": "https://www.slotloevestein.nl/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a small film on the life and craft of Rhiannin: a female visual artist who is fascinated by alternative ways of life and expression, including the expat community, activism, dance and psychedelics",
+        "Year": 2,
+        "Block": "A/B",
+        "Difficulty level": "advanced",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Rhiannin Documentary",
+        "Client": "Rianne Wilbers",
+        "Website": "https://www.rhiannin.com/"
+    },
+    {
+        "Categorie": "Watching ",
+        "Short description": "Create a Promotional video for a project on the circular transition from production to manufacturing. The client is a Logistics centre working on Smart & Circular Logistics. ",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "31-12-2025",
+        "Project title": "Circulaire Stromen",
+        "Client": "Next Level Logistics",
+        "Website": "www.lcb.nu/cs-nll"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Produce entertaining and informative video content that promotes a network of sustainable 'public' toilets in Breda. Appeal directly to Breda residents and encourage them to appreciate sustainable behaviour.",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Pleelist video content",
+        "Client": "Breda Gelijk",
+        "Website": "https://breda-gelijk.nl/pleelistbreda/"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Create online video content to position Mirjam Zwolsman as a expert on handbags  and position her in the sustainable luxury market",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "easy ",
+        "Start": "01-09-2025",
+        "Finish": "t.b.d.",
+        "Project title": "Mirjam Zwolsman online visibility",
+        "Client": "Mirjam Zwolsman Bags",
+        "Website": "Mirjam Zwolsman.nl – Mirjam Zwolsman.nl"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Help Face This to tell the stories of the people and stakeholders involved with Face This to attract new people and organisations",
+        "Year": "2, 3 and 4",
+        "Block": "A/B Creative Collective & d Group ",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Face This social media content",
+        "Client": "Face This",
+        "Website": "https://facethis.org/"
+    },
+    {
+        "Categorie": "Design Experiences",
+        "Short description": "Design, organise and realise the opening event for 'Music Moves': an exhibition space for contemporary music research",
+        "Year": "2 or 3",
+        "Block": "Individual portfolio & learning activity",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "04-12-2025",
+        "Project title": "Music Moves Event",
+        "Client": "Music Moves",
+        "Website": "https://10000hours.nl/MUSIC-MOVES/"
+    },
+    {
+        "Categorie": "All",
+        "Short description": "Help hub with developing content and/or developing marketing and communication plans for their range of clubs, parties and events",
+        "Year": "2, 3 and 4",
+        "Block": "A/B/C/D Portfolio & Creative Collective",
+        "Difficulty level": "intermediate",
+        "Start": "",
+        "Finish": "",
+        "Project title": "HUB content & Marketing",
+        "Client": "HUB",
+        "Website": "https://hubbreda.nl/"
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "Redesign a website for the association JazzProject to attract new people to attend Jazz concerts in the area around Breda",
+        "Year": 3,
+        "Block": "A/B Creative Collective ",
+        "Difficulty level": "advanced",
+        "Start": "01-09-2025",
+        "Finish": "30-01-2026",
+        "Project title": "Jazzproject redesign",
+        "Client": "Jazzproject",
+        "Website": "n.a."
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "Design, develop and produce an Immersive music and movement experience suitable for a variety of (festive) events",
+        "Year": 3,
+        "Block": "C",
+        "Difficulty level": "advanced",
+        "Start": "",
+        "Finish": "",
+        "Project title": "Yamaha Immersive Experience",
+        "Client": "Yamaha Motors Europe",
+        "Website": "n.a."
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create an aftermovie and/or various social media content for Buddy to Buddy that promotes the organisation and attracts volunteers",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "04-12-2025",
+        "Project title": "Buddy to Buddy Aftermovie & stories",
+        "Client": "Stichting Buddy to Buddy",
+        "Website": "https://buddytobuddy.nl/"
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "Design an online 'donatie tool' for donors of Buddy to Buddy. It should help to experience Buddy to Buddy online and support the donors experience. ",
+        "Year": 3,
+        "Block": "A/B Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "28-10-2025",
+        "Project title": "Buddy to Buddy Donation tool",
+        "Client": "Stichting Buddy to Buddy",
+        "Website": "https://buddytobuddy.nl/"
+    },
+    {
+        "Categorie": "Interacting ",
+        "Short description": "Create an animation video showcasing the story and activities of De Kringloper for potential stakeholders, donors, volunteers and guests",
+        "Year": "2 or 3",
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "02-02-2026",
+        "Finish": "t.b.d.",
+        "Project title": "de Kringloper Animation video",
+        "Client": "Stichting de Kringloper",
+        "Website": "https://kringloper.nl/"
+    },
+    {
+        "Categorie": "Listening/Watching",
+        "Short description": "Tell the stories of Breda residents and capture them in a video and/or audio format",
+        "Year": 3,
+        "Block": "A/B Creative Collective",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "01-11-2025",
+        "Project title": "Breda Photo video",
+        "Client": "Breda Photo",
+        "Website": "https://bredaphoto.nl/program/projects/lifestories/"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Promoting",
+        "Year": 3,
+        "Block": "A/B Creative Collective",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "31-10-2025",
+        "Project title": "Popronde Breda promotion",
+        "Client": "Popronde",
+        "Website": "https://popronde.nl/steden/breda"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "Create a marketing communication campaign for the launch of a new video game",
+        "Year": 2,
+        "Block": "C/D Portfolio",
+        "Difficulty level": "",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "The PACK studio video game promotion",
+        "Client": "",
+        "Website": "https://thepack.studio/"
+    },
+    {
+        "Categorie": "Reading",
+        "Short description": "Develop an engaging story for publication on circular design and sustainable cities",
+        "Year": 3,
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Mensch Magazine Articles",
+        "Client": "Mensch Magazine",
+        "Website": ""
+    },
+    {
+        "Categorie": "various",
+        "Short description": "Create new experiences/guided tours with a 'Tourist Tram' at and around the Whiskey destillery",
+        "Year": "3 and 4 ",
+        "Block": "Creative Collective / Graduation project",
+        "Difficulty level": "",
+        "Start": "",
+        "Finish": "",
+        "Project title": "BUS Whiskey experience",
+        "Client": "BUS Whiskey",
+        "Website": "https://buswhisky.com/bus-whisky-toeristentrein"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a series of video's to explain and promote various workshops for kids",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "easy ",
+        "Start": "01-09-2025",
+        "Finish": "a.s.a.p.",
+        "Project title": "Uitvindfabriek workshop video's follow up",
+        "Client": "Uitvindfabriek",
+        "Website": "https://uitvindfabriek.nl/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a company and recruitment video ",
+        "Year": "2 or 3",
+        "Block": "A/B Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Lorenz company video",
+        "Client": "Lorenz",
+        "Website": "https://lorenz.nl/"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Create a series of video's to promote a variety of events of cafe Lievense",
+        "Year": 3,
+        "Block": "A/B Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-09-2025",
+        "Finish": "t.b.d.",
+        "Project title": "Cafe Lievense various video's",
+        "Client": "Cafe Lievense",
+        "Website": "https://cafelievense.nl/"
+    },
+    {
+        "Categorie": "Watching/Promoting",
+        "Short description": "Create an awareness campaign, social media content and/or activations for Netwerkkracht",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Netwerkkracht promotion campaing",
+        "Client": "Lorenz",
+        "Website": "https://lorenz.nl/netwerkkracht/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "Create a promo video for students about ESN and the activities and events they organise",
+        "Year": 2,
+        "Block": "A/B Portfolio",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "ESN Promovideo",
+        "Client": "ESN",
+        "Website": "https://cafelievense.nl/"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-02-2026",
+        "Finish": "t.b.d.",
+        "Project title": "Curio de Rotonde video",
+        "Client": "Curio de Rotonde",
+        "Website": "https://www.curio.nl/sites/default/files/2024-06/brochure-observatieklas-de-rotonde.pdf"
+    },
+    {
+        "Categorie": "Check",
+        "Short description": "Marketing and communication for Ainar, an AI-driven serious game that can help people overcome fear of needles",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-02-2026",
+        "Finish": "t.b.d.",
+        "Project title": "Ainar promotion",
+        "Client": "Ainar/Tilburg University",
+        "Website": "Ainar – Overwin prikangst!"
+    },
+    {
+        "Categorie": "Interacting",
+        "Short description": "",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "02-02-2026",
+        "Finish": "t.b.d.",
+        "Project title": "Vrienden van Breda Jazzfestival website redesign",
+        "Client": "Breda Jazz Festival",
+        "Website": "http://www.vriendenbredajazzfestival.nl"
+    },
+    {
+        "Categorie": "Watching",
+        "Short description": "",
+        "Year": 2,
+        "Block": "C Portfolio",
+        "Difficulty level": "advanced",
+        "Start": "02-02-2026",
+        "Finish": "08-03-2026",
+        "Project title": "International Womens Day 2026 Aftermovie",
+        "Client": "Breda Internationals",
+        "Website": "https://www.internationalwomensday.com/"
+    },
+    {
+        "Categorie": "various",
+        "Short description": "",
+        "Year": "2, 3 and 4",
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Sterren van morgen future strategy",
+        "Client": "Stichting Sterren van Morgen",
+        "Website": "http://www.sterrenvanmorgen.com/"
+    },
+    {
+        "Categorie": "Wathing",
+        "Short description": "",
+        "Year": 2,
+        "Block": "C Portfolio",
+        "Difficulty level": "easy ",
+        "Start": "t.b.d.",
+        "Finish": "t.b.d.",
+        "Project title": "Archimedes video's",
+        "Client": "Kindcentrum Archimedes",
+        "Website": "https://www.kindcentrumarchimedes.nl/"
+    },
+    {
+        "Categorie": "Promoting",
+        "Short description": "To effectively market the event to the appropriate target audience, aiming to maximize attendance. ",
+        "Year": 2,
+        "Block": "C/D Portfolio & Creative Collective ",
+        "Difficulty level": "intermediate",
+        "Start": "01-01-2026",
+        "Finish": "01-06-2026",
+        "Project title": "Everything Procedural Conference Marketing",
+        "Client": "AGM/EPC",
+        "Website": "https://www.everythingprocedural.com/"
+    }
+];
+
+        function VacancyBoard() {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [selectedCategory, setSelectedCategory] = useState('All');
+            const [selectedYear, setSelectedYear] = useState('All');
+            const [selectedDifficulty, setSelectedDifficulty] = useState('All');
+            const [selectedBlock, setSelectedBlock] = useState('All');
+            const [expandedCard, setExpandedCard] = useState(null);
+
+            // Get unique values for filters
+            const categories = useMemo(() => {
+                const cats = ['All', ...new Set(projectData.map(p => p.Categorie).filter(Boolean))];
+                return cats.sort();
+            }, []);
+
+            const years = useMemo(() => {
+                const yrs = ['All', ...new Set(projectData.map(p => String(p.Year)).filter(Boolean))];
+                return yrs.sort((a, b) => {
+                    if (a === 'All') return -1;
+                    if (b === 'All') return 1;
+                    return a.length - b.length || a.localeCompare(b);
+                });
+            }, []);
+
+            const difficulties = ['All', 'easy', 'intermediate', 'advanced'];
+            
+            const blocks = useMemo(() => {
+                const blks = ['All', ...new Set(projectData.map(p => p.Block).filter(Boolean))];
+                return blks.sort();
+            }, []);
+
+            const filteredProjects = useMemo(() => {
+                return projectData.filter(project => {
+                    const matchesSearch = 
+                        project['Project title']?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        project.Client?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        project.Categorie?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        project['Short description']?.toLowerCase().includes(searchTerm.toLowerCase());
+                    
+                    const matchesCategory = selectedCategory === 'All' || project.Categorie === selectedCategory;
+                    const matchesYear = selectedYear === 'All' || String(project.Year) === selectedYear;
+                    const matchesDifficulty = selectedDifficulty === 'All' || 
+                        project['Difficulty level']?.trim().toLowerCase() === selectedDifficulty;
+                    const matchesBlock = selectedBlock === 'All' || project.Block === selectedBlock;
+
+                    return matchesSearch && matchesCategory && matchesYear && matchesDifficulty && matchesBlock;
+                });
+            }, [searchTerm, selectedCategory, selectedYear, selectedDifficulty, selectedBlock]);
+
+            const getDifficultyClass = (difficulty) => {
+                const diff = difficulty?.trim().toLowerCase();
+                if (diff === 'easy') return 'difficulty-easy';
+                if (diff === 'intermediate') return 'difficulty-intermediate';
+                if (diff === 'advanced') return 'difficulty-advanced';
+                return 'bg-gray-200 text-gray-700';
+            };
+
+            const resetFilters = () => {
+                setSearchTerm('');
+                setSelectedCategory('All');
+                setSelectedYear('All');
+                setSelectedDifficulty('All');
+                setSelectedBlock('All');
+            };
+
+            return (
+                <div className="min-h-screen">
+                    {/* Header */}
+                    <div className="gradient-bg text-white py-12 px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-7xl mx-auto">
+                            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                                Creative Business Media Lab Project Vacancy Board
+                            </h1>
+                            <p className="text-xl text-gray-100">
+                                Academic Year 2025-2026 | Breda University of Applied Sciences
+                            </p>
+                            <p className="mt-4 text-lg text-gray-200">
+                                Discover {projectData.length} exciting client projects across various creative disciplines
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Filters Section */}
+                    <div className="bg-white shadow-md border-b sticky top-0 z-10">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                            {/* Search Bar */}
+                            <div className="mb-4">
+                                <input
+                                    type="text"
+                                    placeholder="Search projects by title, client, category, or description..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-base"
+                                />
+                            </div>
+
+                            {/* Filter Dropdowns */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-700 mb-1">Category</label>
+                                    <select
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm"
+                                    >
+                                        {categories.map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-700 mb-1">Year</label>
+                                    <select
+                                        value={selectedYear}
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm"
+                                    >
+                                        {years.map(year => (
+                                            <option key={year} value={year}>{year}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-700 mb-1">Difficulty</label>
+                                    <select
+                                        value={selectedDifficulty}
+                                        onChange={(e) => setSelectedDifficulty(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm"
+                                    >
+                                        {difficulties.map(diff => (
+                                            <option key={diff} value={diff}>{diff}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-700 mb-1">Block</label>
+                                    <select
+                                        value={selectedBlock}
+                                        onChange={(e) => setSelectedBlock(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm"
+                                    >
+                                        {blocks.map(block => (
+                                            <option key={block} value={block}>{block === 'All' ? 'All' : block}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="flex items-end">
+                                    <button
+                                        onClick={resetFilters}
+                                        className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium text-sm"
+                                    >
+                                        Reset Filters
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Results Count */}
+                            <div className="mt-4 text-center">
+                                <span className="text-gray-600 font-medium">
+                                    Showing {filteredProjects.length} of {projectData.length} projects
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Projects Grid */}
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {filteredProjects.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-xl text-gray-500">No projects found matching your criteria.</p>
+                                <p className="text-gray-400 mt-2">Try adjusting your filters or search terms.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {filteredProjects.map((project, index) => {
+                                    const isExpanded = expandedCard === index;
+                                    return (
+                                        <div 
+                                            key={index} 
+                                            className="bg-white rounded-lg shadow-md p-6 card-hover border border-gray-200 flex flex-col"
+                                        >
+                                            {/* Category and Difficulty Badges */}
+                                            <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
+                                                <span className="badge category-badge text-xs">
+                                                    {project.Categorie}
+                                                </span>
+                                                {project['Difficulty level'] && (
+                                                    <span className={`badge text-xs ${getDifficultyClass(project['Difficulty level'])}`}>
+                                                        {project['Difficulty level'].trim()}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            {/* Project Title */}
+                                            <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                                                {project['Project title']}
+                                            </h3>
+
+                                            {/* Client */}
+                                            {project.Client && (
+                                                <p className="text-gray-700 font-semibold mb-3">{project.Client}</p>
+                                            )}
+
+                                            {/* Short Description */}
+                                            {project['Short description'] && (
+                                                <p className={`text-sm text-gray-600 mb-4 ${isExpanded ? '' : 'line-clamp-3'}`}>
+                                                    {project['Short description']}
+                                                </p>
+                                            )}
+
+                                            {/* Show More/Less Button */}
+                                            {project['Short description'] && project['Short description'].length > 150 && (
+                                                <button
+                                                    onClick={() => setExpandedCard(isExpanded ? null : index)}
+                                                    className="text-orange-600 hover:text-orange-700 text-sm font-medium mb-3 text-left"
+                                                >
+                                                    {isExpanded ? '← Show less' : 'Show more →'}
+                                                </button>
+                                            )}
+
+                                            {/* Details Grid */}
+                                            <div className="space-y-2 text-sm text-gray-600 mb-4 mt-auto">
+                                                <div className="flex">
+                                                    <span className="font-semibold w-16">Year:</span>
+                                                    <span>{project.Year}</span>
+                                                </div>
+                                                <div className="flex">
+                                                    <span className="font-semibold w-16">Block:</span>
+                                                    <span className="truncate" title={project.Block}>{project.Block}</span>
+                                                </div>
+                                                {project.Start && project.Start !== 't.b.d.' && (
+                                                    <div className="flex">
+                                                        <span className="font-semibold w-16">Period:</span>
+                                                        <span className="truncate">
+                                                            {project.Start} - {project.Finish || 't.b.d.'}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Website Link */}
+                                            {project.Website && project.Website !== 'n.a.' && project.Website !== '' && (
+                                                <div className="border-t pt-4 mt-auto">
+                                                    <a 
+                                                        href={project.Website.startsWith('http') ? project.Website : `https://${project.Website}`}
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer" 
+                                                        className="text-sm text-orange-600 hover:text-orange-700 font-medium flex items-center"
+                                                    >
+                                                        Visit website →
+                                                    </a>
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Footer */}
+                    <footer className="bg-gray-800 text-white py-8 mt-12">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <p className="text-lg font-semibold mb-2">Breda University of Applied Sciences</p>
+                            <p className="text-gray-300">Creative Business Programme | Media Lab</p>
+                            <p className="text-gray-400 text-sm mt-4">Academic Year 2025-2026 | Last updated: December 2025</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<VacancyBoard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
